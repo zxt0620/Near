@@ -5,18 +5,18 @@ async function interactWithContract() {
     networkId: 'mainnet',
     keyStore: new nearAPI.keyStores.InMemoryKeyStore(),
     //nodeUrl: "https://rpc.mainnet.near.org",
-    nodeUrl: "https://rpc.ankr.com/near/177a550efab9e170a1caa499b7b00542c97c74a6ccd77e318ebf7d4e743ec6ef",
+    nodeUrl: "自己RPC",
     walletUrl: "https://wallet.mainnet.near.org",
     helperUrl: "https://helper.mainnet.near.org",
     explorerUrl: "https://explorer.mainnet.near.org",
   };
 
-  const privateKey = 'ed25519:3XSJh6AKriEQu3y92XRMMgegZDbzAn7HxRHv2wHz3SBFTDKzHiESL4XT4C7nNiAm2TK26Y5J1e7vkDCtCmtDY8eR'; // 替换私钥
+  const privateKey = '私钥'; // 替换私钥
   const keyPair = nearAPI.utils.KeyPair.fromString(privateKey);
-  config.keyStore.setKey('mainnet', '9fb103649e4f7c2be74c00f21b8f4105cec59060b64a2d97379f82dea1256a6e', keyPair); // 替换NEAR账户名
+  config.keyStore.setKey('mainnet', '名字', keyPair); // 替换NEAR账户名
 
   const near = await nearAPI.connect(config);
-  const account = await near.account('9fb103649e4f7c2be74c00f21b8f4105cec59060b64a2d97379f82dea1256a6e'); // 替换NEAR账户名
+  const account = await near.account('名字'); // 替换NEAR账户名
 
   const contractId = 'inscription.near'; 
   const contractMethod = 'inscribe'; 
@@ -27,6 +27,7 @@ async function interactWithContract() {
     "amt": "100000000"
   };
 
+  for (let i = 0; i < 10000; i++) {
     try {
       const result = await account.functionCall({
         contractId,
@@ -39,12 +40,7 @@ async function interactWithContract() {
     } catch (error) {
       console.error(`第${i + 1}次：失败，错误信息：${error.message}`);
     }
+  }
 }
 
-async function xx(){
-	for(i=0;i<1000;i++){
-		interactWithContract().catch(console.error);
-	}
-}
-
-xx()
+interactWithContract().catch(console.error);
